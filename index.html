@@ -57,28 +57,28 @@
                         <el-form :inline="true" style="margin-top:30px;">
                             <el-row>
                                 <el-col :span="12">
-                                    <el-form-item label="请输入查询条件：">
-                                        <el-input v-model="inputStr" placeholder="输入查询条件" style="width: 420px;">
+                                    <el-form-item label="Please enter your search criteria：">
+                                        <el-input v-model="inputStr" placeholder="enter your search criteria" style="width: 420px;">
                                         </el-input>
                                     </el-form-item>
                                 </el-col>
                                 <el-col :span="8" style="text-align: right;padding-right:10px;">
                                     <el-button-group>
-                                        <el-button type="primary" icon="el-icon-search" @click="queryStudents()">查询
+                                        <el-button type="primary" icon="el-icon-search" @click="queryStudents()">Search
                                         </el-button>
-                                        <el-button type="primary" icon="el-icon-tickets" @click="getAllStudents()">全部
+                                        <el-button type="primary" icon="el-icon-tickets" @click="getAllStudents()">All
                                         </el-button>
                                         <el-button type="primary" icon="el-icon-circle-plus-outline"
-                                            @click="addStudent()">添加</el-button>
+                                            @click="addStudent()">Add</el-button>
                                     </el-button-group>
                                 </el-col>
                                 <el-col :span="2">
                                     <el-upload :show-file-list="false" :http-request="uploadExcelPost">
-                                        <el-button type="primary">导入Excel</el-button>
+                                        <el-button type="primary">Import Excel</el-button>
                                     </el-upload>
                                 </el-col>
                                 <el-col :span="2">
-                                    <el-button type="primary" @click="exportToExcel()">导出Excel</el-button>
+                                    <el-button type="primary" @click="exportToExcel()">Export Excel</el-button>
                                 </el-col>
                             </el-row>
                         </el-form>
@@ -87,23 +87,58 @@
                             @selection-change="handleSelectionChange">
                             <el-table-column type="selection">
                             </el-table-column>
-                            <el-table-column type="index" label="序号" align="center" width="60">
+                            <el-table-column prop="SiteName" label="SiteName" align="center" width="80">
                             </el-table-column>
-                            <el-table-column prop="sno" label="学号" width="80">
+                            <el-table-column prop="Country" label="Country" width="80">
                             </el-table-column>
-                            <el-table-column prop="name" label="姓名" width="80">
+                            <el-table-column prop="AQI" label="AQI" width="80">
                             </el-table-column>
-                            <el-table-column prop="gender" label="性别" width="60">
+                            <el-table-column prop="Pollutant" label="Pollutant" align="center" width="120">
                             </el-table-column>
-                            <el-table-column prop="birthday" label="出生日期" align="center" width="100">
+                            <el-table-column prop="Status" label="Status" align="center" width="80">
                             </el-table-column>
-                            <el-table-column prop="mobile" label="电话" align="center" width="120">
+                            <el-table-column prop="SO2" label="SO2" align="center" width="80">
                             </el-table-column>
-                            <el-table-column prop="email" label="邮箱" align="center" width="220">
+                            <el-table-column prop="CO" label="CO" align="center" width="80">
                             </el-table-column>
-                            <el-table-column prop="address" label="地址" align="center">
+                            <el-table-column prop="O3" label="O3" align="center" width="80">
                             </el-table-column>
-                            <el-table-column label="操作" width="180" align="center">
+                            <el-table-column prop="O3_8hr" label="O3_8hr" align="center" width="80">
+                            </el-table-column>
+                            <el-table-column prop="PM10" label="PM10" align="center" width="80">
+                            </el-table-column>
+                            <el-table-column prop="PM2.5" label="PM2.5" align="center" width="80">
+                            </el-table-column>
+                            <el-table-column prop="NO2" label="NO2" align="center" width="80">
+                            </el-table-column>
+                            <el-table-column prop="NOx" label="NOx" align="center" width="80">
+                            </el-table-column>
+                            <el-table-column prop="NO" label="NO" align="center" width="80">
+                            </el-table-column>
+                            <el-table-column prop="WindSpeed" label="WindSpeed" align="center" width="100">
+                            </el-table-column>
+                            <el-table-column prop="WindDirection" label="WindDirection" align="center" width="120">
+                            </el-table-column>
+                            <el-table-column prop="DataCreationDate" label="DataCreationDate" align="center" width="200">
+                            </el-table-column>
+                            <el-table-column prop="CO_8hr" label="CO_8hr" align="center" width="80">
+                            </el-table-column>
+                            <el-table-column prop="CO_8hr" label="CO_8hr" align="center" width="80">
+                            </el-table-column>
+                            <el-table-column prop="PM2.5_AVG" label="PM2.5_AVG" align="center" width="80">
+                            </el-table-column>
+                            <el-table-column prop="PM10_AVG" label="PM10_AVG" align="center" width="80">
+                            </el-table-column>
+                            <el-table-column prop="SO2_AVG" label="SO2_AVG" align="center" width="80">
+                            </el-table-column>
+                            <el-table-column prop="Longitude" label="Longitude" align="center" width="80">
+                            </el-table-column>
+                            <el-table-column prop="Latitude" label="Latitude" align="center" width="80">
+                            </el-table-column>
+                            <el-table-column prop="SiteId" label="SiteId" align="center" width="80">
+                            </el-table-column>
+                            
+                            
                                 <template slot-scope="scope">
                                     <el-button type="success" icon="el-icon-more" size="mini" circle
                                         @click="viewStudent(scope.row)"></el-button>
@@ -116,10 +151,10 @@
                         </el-table>
                         <!-- 分页 -->
                         <el-row style="margin-top: 20px;">
-                            <el-col :span="8" style="text-align: left">
+<!--                             <el-col :span="8" style="text-align: left">
                                 <el-button type="danger" icon="el-icon-delete" size="mini" @click="deleteStudents()">
-                                    批量删除</el-button>
-                            </el-col>
+                                    Bulk Delete</el-button>
+                            </el-col> -->
                             <el-col :span="16" style="text-align: right">
                                 <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
                                     :current-page="currentpage" :page-sizes="[5, 10, 50, 100]" :page-size="pagesize"
@@ -127,7 +162,7 @@
                                 </el-pagination>
                             </el-col>
                         </el-row>
-                        <!-- 弹出框的学生明细表单 -->
+<!--                         <!-- 弹出框的学生明细表单 -->
                         <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="50%"
                             @close="closeDialogForm('studentForm')">
                             <el-form :model="studentForm" :rules="rules" ref="studentForm" :inline="true"
@@ -176,7 +211,7 @@
                                 <el-button type="info" size="mini" @click="closeDialogForm('studentForm')">取 消
                                 </el-button>
                             </span>
-                        </el-dialog>
+                        </el-dialog> -->
                     </el-main>
                     <el-footer style="height: 30px;"></el-footer>
                 </el-container>
