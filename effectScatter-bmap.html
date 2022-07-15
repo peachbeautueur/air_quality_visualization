@@ -1,0 +1,279 @@
+<!--
+	THIS EXAMPLE WAS DOWNLOADED FROM https://echarts.apache.org/examples/zh/editor.html?c=effectScatter-bmap
+-->
+<!DOCTYPE html>
+<html lang="zh-CN" style="height: 100%">
+
+<head>
+  <meta charset="utf-8">
+</head>
+
+<body style="height: 100%; margin: 0">
+  <div id="container" style="height: 100%"></div>
+
+
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5.3.3/dist/echarts.min.js"></script>
+  <!-- Uncomment this line if you want to dataTool extension -->
+  <script type="text/javascript"
+    src="https://fastly.jsdelivr.net/npm/echarts@5.3.3/dist/extension/dataTool.min.js"></script>
+  <!-- Uncomment this line if you want to use gl extension -->
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
+  <!-- Uncomment this line if you want to echarts-stat extension -->
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts-stat@latest/dist/ecStat.min.js"></script>
+  <!-- Uncomment this line if you want to use map -->
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@4.9.0/map/js/china.js"></script>
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@4.9.0/map/js/world.js"></script>
+  <!-- Uncomment these two lines if you want to use bmap extension -->
+  <script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&ak=nZMW2fg6i46tIvw5zXCxavFKsGGNQCAN"></script>
+  <!-- <script type="text/javascript" src="//api.map.baidu.com/api?type=webgl&v=1.0&ak=yDRePtK8lah0hRESStd8OEGoDWOEWven"></script> -->
+  <script type="text/javascript"
+    src="https://fastly.jsdelivr.net/npm/echarts@5.3.3/dist/extension/bmap.min.js"></script>
+
+  <script type="text/javascript">
+    var dom = document.getElementById('container');
+    var myChart = echarts.init(dom, null, {
+      renderer: 'canvas',
+      useDirtyRect: false
+    });
+    var app = {};
+
+    var option;
+
+    const data = [
+      { name: '彰化縣', value: 10}
+    ];
+    const geoCoordMap = {
+      彰化縣: [120.55, 24.06],
+      雲林縣: [120.48, 23.66],
+      宜蘭縣: [121.75, 24.75],
+      新竹縣: [121.00, 24.83],
+      新竹市: [120.99, 24.78],
+      新北市: [121.66, 25.18],
+      桃園市: [121.21, 24.98],
+      臺中市: [120.67, 24.14],
+      臺南市: [120.18, 22.99],
+      臺東縣: [121.11, 22.76],
+      臺北市: [121.52, 25.03],
+      屏東縣: [120.49, 22.66],
+      澎湖縣: [119.58, 23.55],
+      南投縣: [120.67, 23.91],
+      苗栗縣: [120.88, 24.69],
+      連江縣: [119.54, 26.20],
+      金門縣: [118.32, 24.44],
+      嘉義縣: [120.62, 23.43],
+      嘉義市: [120.47, 23.48],
+      基隆市: [121.74, 25.12],
+      花蓮縣: [121.59, 24.00],
+      高雄市: [120.30, 22.63],
+    };
+    const convertData = function (data) {
+      var res = [];
+      for (var i = 0; i < data.length; i++) {
+        var geoCoord = geoCoordMap[data[i].name];
+        if (geoCoord) {
+          res.push({
+            name: data[i].name,
+            value: geoCoord.concat(data[i].value)
+          });
+        }
+      }
+      return res;
+    };
+    option = {
+      title: {
+        left: 'center'
+      },
+      tooltip: {
+        trigger: 'item'
+      },
+      bmap: {
+        center: [120.67, 24.14],
+        zoom: 9,
+        roam: true,
+        mapStyle: {
+          styleJson: [
+            {
+              featureType: 'water',
+              elementType: 'all',
+              stylers: {
+                color: '#d1d1d1'
+              }
+            },
+            {
+              featureType: 'land',
+              elementType: 'all',
+              stylers: {
+                color: '#f3f3f3'
+              }
+            },
+            {
+              featureType: 'railway',
+              elementType: 'all',
+              stylers: {
+                visibility: 'off'
+              }
+            },
+            {
+              featureType: 'highway',
+              elementType: 'all',
+              stylers: {
+                color: '#fdfdfd'
+              }
+            },
+            {
+              featureType: 'highway',
+              elementType: 'labels',
+              stylers: {
+                visibility: 'off'
+              }
+            },
+            {
+              featureType: 'arterial',
+              elementType: 'geometry',
+              stylers: {
+                color: '#fefefe'
+              }
+            },
+            {
+              featureType: 'arterial',
+              elementType: 'geometry.fill',
+              stylers: {
+                color: '#fefefe'
+              }
+            },
+            {
+              featureType: 'poi',
+              elementType: 'all',
+              stylers: {
+                visibility: 'off'
+              }
+            },
+            {
+              featureType: 'green',
+              elementType: 'all',
+              stylers: {
+                visibility: 'off'
+              }
+            },
+            {
+              featureType: 'subway',
+              elementType: 'all',
+              stylers: {
+                visibility: 'off'
+              }
+            },
+            {
+              featureType: 'manmade',
+              elementType: 'all',
+              stylers: {
+                color: '#d1d1d1'
+              }
+            },
+            {
+              featureType: 'local',
+              elementType: 'all',
+              stylers: {
+                color: '#d1d1d1'
+              }
+            },
+            {
+              featureType: 'arterial',
+              elementType: 'labels',
+              stylers: {
+                visibility: 'off'
+              }
+            },
+            {
+              featureType: 'boundary',
+              elementType: 'all',
+              stylers: {
+                color: '#fefefe'
+              }
+            },
+            {
+              featureType: 'building',
+              elementType: 'all',
+              stylers: {
+                color: '#d1d1d1'
+              }
+            },
+            {
+              featureType: 'label',
+              elementType: 'labels.text.fill',
+              stylers: {
+                color: '#999999'
+              }
+            }
+          ]
+        }
+      },
+      series: [
+        {
+          name: 'pm2.5',
+          type: 'scatter',
+          coordinateSystem: 'bmap',
+          data: convertData(data),
+          symbolSize: function (val) {
+            return val[2] / 10;
+          },
+          encode: {
+            value: 2
+          },
+          label: {
+            formatter: '{b}',
+            position: 'right',
+            show: false
+          },
+          emphasis: {
+            label: {
+              show: true
+            }
+          }
+        },
+        {
+          name: 'Top 5',
+          type: 'effectScatter',
+          coordinateSystem: 'bmap',
+          data: convertData(
+            data
+              .sort(function (a, b) {
+                return b.value - a.value;
+              })
+              .slice(0, 6)
+          ),
+          symbolSize: function (val) {
+            return val[2] / 10;
+          },
+          encode: {
+            value: 2
+          },
+          showEffectOn: 'render',
+          rippleEffect: {
+            brushType: 'stroke'
+          },
+          label: {
+            formatter: '{b}',
+            position: 'right',
+            show: true
+          },
+          itemStyle: {
+            shadowBlur: 10,
+            shadowColor: '#333'
+          },
+          emphasis: {
+            scale: true
+          },
+          zlevel: 1
+        }
+      ]
+    };
+
+    if (option && typeof option === 'object') {
+      myChart.setOption(option);
+    }
+
+    window.addEventListener('resize', myChart.resize);
+  </script>
+</body>
+
+</html>
